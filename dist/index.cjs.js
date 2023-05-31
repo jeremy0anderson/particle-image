@@ -102,8 +102,13 @@ function ParticleSystem(props) {
             // context = canvas.getContext('2d');
             // console.log(image);
             this.context.drawImage(_image, this.offsetX, this.offsetY, this.renderWidth, this.renderHeight);
-            context.getImageData(this.offsetX, this.offsetY, this.width, this.height).data;
+            var data = context.getImageData(this.offsetX, this.offsetY, this.width, this.height).data;
+            this.draw(data, this.offsetX, this.offsetY);
           }
+        }
+      }, {
+        key: "draw",
+        value: function draw(data, offsetX, offsetY) {
           for (var x = 0; x < this.width; x += props.gap) {
             for (var y = 0; y < this.height; y += props.gap) {
               var index = (x + y * this.width) * 4;
@@ -114,8 +119,8 @@ function ParticleSystem(props) {
               var colors = [r, g, b, a];
               if (a > 0) {
                 this.origins.push(new Particle({
-                  x: this.offsetX + x,
-                  y: this.offsetY + y,
+                  x: offsetX + x,
+                  y: offsetY + y,
                   colors: colors
                 }));
               }

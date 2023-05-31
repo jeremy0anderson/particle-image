@@ -101,7 +101,10 @@ export function ParticleSystem(props){
                // console.log(image);
                this.context.drawImage(image, this.offsetX, this.offsetY, this.renderWidth, this.renderHeight);
                let data = context.getImageData(this.offsetX, this.offsetY, this.width, this.height).data;
+               this.draw(data, this.offsetX, this.offsetY);
             }
+         }
+         draw(data, offsetX, offsetY){
             for (let x = 0; x < this.width; x+=props.gap) {
                for (let y = 0; y < this.height; y+=props.gap) {
                   let index = ((x + y *this.width)*4);
@@ -112,12 +115,11 @@ export function ParticleSystem(props){
                   let colors = [r, g, b, a];
                   if ( a > 0){
                      this.origins.push(new Particle({
-                        x:this.offsetX+x, y:this.offsetY+y, colors
+                        x:offsetX+x, y:offsetY+y, colors
                      }));
                   }
                }
             }
-            
          }
          initParticles(origins){
             for (let i = 0; i < origins.length; i++) {
